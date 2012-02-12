@@ -47,6 +47,7 @@ set(VALA_SRC
 	classes/presentation_controller.vala
 	classes/renderer/base.vala
 	classes/renderer/pdf.vala
+        classes/renderer/cache_filler.vala
 	classes/renderer/cache/base.vala
 	classes/renderer/cache/simple/engine.vala
 	classes/renderer/cache/png/item.vala

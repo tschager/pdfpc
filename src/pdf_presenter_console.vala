@@ -192,10 +192,12 @@ namespace org.westhoffswelt.pdfpresenter {
                 this.presenter_window.show_all();
             }
 
+            Renderer.CacheFiller cache_filler = new Renderer.CacheFiller(metadata);
             
             // Enter the Glib eventloop
             // Everything from this point on is completely signal based
             Gdk.threads_enter();
+            Idle.add(cache_filler.prerender_slides);
             Gtk.main();
             Gdk.threads_leave();
         }
