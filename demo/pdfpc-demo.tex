@@ -1,0 +1,244 @@
+\documentclass{beamer}
+
+\usepackage{calc}
+\usepackage{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage{keystroke}
+\usepackage{xspace}
+
+\useoutertheme{shadow}
+\usecolortheme{beaver}
+
+\newcommand{\singleitem}[1]{\begin{itemize}\item #1\end{itemize}}
+\newcommand{\pdfpc}{\texttt{pdfpc}\xspace}
+\newcommand{\opt}[1]{\texttt{#1}\xspace}
+
+\setbeamertemplate{navigation symbols}{}
+
+\defbeamertemplate{footline}{my foot}{%
+\vskip1pt%
+\makebox[0pt][l]{\insertshortauthor}%
+\hspace*{\fill}\insertshorttitle\hspace*{\fill}%
+\llap{\insertframenumber\phantom{/}}
+}
+\setbeamertemplate{footline}[my foot]
+
+
+\mode<presentation>
+
+\title{\pdfpc demo}
+\author[D. Vilar]{David Vilar \\ \texttt{davvil@gmail.com}}
+\date{\today}
+\institute{}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+  \hypertarget{titlePage}{}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Starting up}
+  Hi! Welcome to the demo of \pdfpc, a pdf presentation tool.
+  \begin{block}{Setting up}
+    I assume you have opened this presentation with \pdfpc itself. You may have
+    one of these cases:
+    \begin{itemize}
+      \item The main presentation and the presenter view are on the correct
+        screens
+          \singleitem{you are ready to go!}
+      \item The main presentation and the presenter view have the monitors
+        swapped
+          \singleitem{restart \pdfpc with the \opt{-s} option}
+      \item You are viewing this on a single monitor
+          \singleitem{you are currently on the presenter view. You can get a
+          good feeling of what \pdfpc is good for, but you will have to take
+          my word for some of the features}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{The presenter view}
+  The presenter view is the one on your monitor, visible only to the presenter
+  \begin{itemize}
+    \item It shows the current and next slides
+    \item It shows how long the presentation is running
+      \singleitem{With the \opt{-d <min>} option it shows a countdown timer}
+    \item It shows the current slide number and the total number of slides
+    \item It shows overlay information (see next slide)
+    \item It shows some additional status information (we will see it later)
+  \end{itemize}
+  Of course, the presentation view only shows the current slide
+\end{frame}
+
+\begin{frame}
+  \frametitle{Basic movement}
+  \begin{itemize}
+    \item You probably have guessed by now, but for moving forward you can use
+      one of \RArrow, \PgUp, \Return, \Spacebar (space bar) and the left mouse
+      button
+
+      \alert{Important:} Do not use \DArrow (yet!) for moving forward
+    \item Likewise you can use \LArrow, \PgDown or the right mouse button for
+      going back
+
+      \alert{Important:} Do not use \UArrow (yet!) for moving backwards
+    \item Pressing shift in addition to one of the previous keys
+      causes the movement to jump in 10-slide steps.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Overlays}
+  \begin{itemize}
+    \item Some people like overlays in their presentations
+    \pause
+    \item i.e.\ slides that build up step-wise
+    \pause
+    \item \pdfpc supports such slides:
+    \pause
+    \item Note the two miniatures below the current slide
+    \pause
+    \item Note also that the slide counter shows the correct slide number
+    \pause
+    \item The 10-jump slides mentioned in the previous slide also support
+      overlays
+    \pause
+    \item If you are fed up with this overlay, you can jump to the next slide
+      with \DArrow
+    \pause
+    \item Really you should skip to the next slide now
+    \pause
+    \item Nothing interesting is coming here
+    \pause
+    \item I just wanted to make a point that too long overlays may be boring
+    \pause
+    \item Come on, nothing to see here!
+    \pause
+    \item I am not kidding!
+    \pause
+    \item Ok, you won
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{More on overlays}
+  \begin{block}{Movement}
+    \begin{itemize}
+      \item Normal movement while \emph{inside} an overlay jumps through each step
+        in the overlay
+      \item Movement backwards \emph{outside} of an overlay jumps to the beginning
+        of the overlay
+        \singleitem{e.g.\ press \PgUp now}
+      \item \UArrow and \DArrow jump to the previous and next slide respectively,
+        ignoring overlay steps
+    \end{itemize}
+  \end{block}
+  \begin{block}{Definition of overlays}
+    \begin{itemize}
+      \item \pdfpc tries to find the overlay information automatically by
+        looking at the page numbers
+      \item If automatic detection does not work, you can define overlays with
+        \keystroke{O} on every slide composing an overlay
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Jumping to specific slides}
+  \begin{itemize}
+    \item Pressing \keystroke{G} you can enter a slide number to jump to
+    \alert{Remember:} We are on slide \insertframenumber, for jumping back
+    \item Pressing \Tab (Tab) you get an overview of the whole presentation,
+      which you can use to jump around (note that only the first overlay slide
+      is shown in the overview!)
+    \item Hyperlinks also work, press \hyperlink{titlePage}{here to jump to the
+      first slide}
+    \item \Home and \End also work as expected
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Notes}
+  \begin{itemize}
+    \item Pressing \keystroke{N} you can annotate slides (text only)
+      \singleitem{Try it now!}
+    \item Pressing \Esc exits the note editing mode
+    \item The notes are stored automatically
+    \item The notes apply to all the slides in an overlay
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Controlling the presentation view}
+    \begin{itemize}
+      \item Pressing \keystroke{F} you can freeze the presentation view, i.e.\
+        slide movement does not reflect on the presentation view
+        \singleitem{This is useful if you want to search for some slide without
+        confusing the audience with quick slide flipping}
+      \item Pressing \keystroke{B} you can fade to black the presentation view
+        \singleitem{This is useful e.g.\ if you are using slides and a
+        blackboard at the same time}
+      \item The presenter view shows some icons reflecting the current status
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Controlling the clock}
+  \begin{itemize}
+    \item With \keystroke{S} you can start the clock at the beginning of the
+      presentation
+      \singleitem{Note that the clock also starts automatically when moving slides}
+    \item With \keystroke{P} you can pause the clock
+      \singleitem{Useful for rehearsal talks}
+    \item With \keystroke{R} you can reset the presentation
+      \singleitem{i.e.\ set the clock to 0 and jump to the first slide}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Finishing}
+  \begin{itemize}
+    \item Some people like having support slides after their ``last'' slide
+      \singleitem{Advanced topics, bilbiography, expected questions, etc.}
+    \item Pressing \keystroke{E} you can define this to be the end slide in the
+      presentation
+      \singleitem{The slide count in the presenter view gets updated, to give you
+      a better overview of how many slides are left}
+      \singleitem{It also updates the slide you jump to when pressing \End}
+    \item For exiting, press \keystroke{Q} or \Esc
+  \end{itemize}
+  \vfill
+  \begin{center}
+    THE END
+  \end{center}
+  \vfill
+  {\footnotesize There are a couple of slides more with some additional information,
+  but we do not want to show them to the audience if they do not ask for them}
+\end{frame}
+
+\begin{frame}
+  \frametitle{\opt{.pdfpc} files}
+  \begin{itemize}
+    \item The additional information needed for the presentation (duration,
+      notes, end slide, etc.) is stored in an additional file with extension
+      \opt{.pdfpc}
+    \item Most of the time this file is automatically handled
+    \item If you ever need to do changes by hand (e.g.\ if you modify the pdf
+      after defining the meta-information) it is a text-based format easy to
+      edit
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Acknowledgements}
+  \begin{itemize}
+    \item \pdfpc is a fork of pdf-presenter-console
+      ({\footnotesize \verb+http://westhoffswelt.de/projects/pdf_presenter_console.html+})
+    \item Many thanks to Jakob Westhoff, the original author!
+  \end{itemize}
+\end{frame}
+
+\end{document}
