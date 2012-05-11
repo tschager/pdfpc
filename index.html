@@ -21,11 +21,9 @@
           <h1 id="project_title">pdfpc</h1>
           <h2 id="project_tagline">A presenter console with multi-monitor support for PDF files.</h2>
 
-          <!--
             <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/davvil/pdfpc/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/davvil/pdfpc/tarball/master">Download this project as a tar.gz file</a>
-              </section> -->
+              <a class="tar_download_link" href="https://github.com/downloads/davvil/pdfpc/pdfpc-3.0.tgz">Download this project as a tar.gz file</a>
+              </section>
         </header>
     </div>
 
@@ -36,14 +34,14 @@
 
 <h1>About</h1>
 
-<p>pdfpc is a GTK based presentation viewer application which uses Keynote like
-multi-monitor output to provide meta information to the speaker during the
-presentation. It is able to show a normal presentation window on one screen,
-while showing a more sophisticated overview on the other one providing
-information like a picture of the next slide, as well as the left over time
-till the end of the presentation. The input files processed by pdfpc are PDF
-documents, which can be created using nearly any of today's presentation
-software.</p>
+<p>pdfpc is a GTK based presentation viewer application for GNU/Linux which
+uses Keynote like multi-monitor output to provide meta information to the
+speaker during the presentation. It is able to show a normal presentation
+window on one screen, while showing a more sophisticated overview on the other
+one providing information like a picture of the next slide, as well as the left
+over time till the end of the presentation. The input files processed by pdfpc
+are PDF documents, which can be created using nearly any of today's
+presentation software.</p>
 
 <h1>Screenshots</h1>
 
@@ -79,101 +77,60 @@ To get a better feeling of pdfpc, install it, download the <a
     href=https://github.com/downloads/davvil/pdfpc/pdfpc-demo.pdf>demo presentation</a> and start it with
 <pre><code>pdfpc pdfpc-demo.pdf</code></pre>
 
-<h1>Download</h1>
+<h1>Installation</h1>
 
-Currently pdfpc is only available through <a
-    href="https://github.com/davvil/pdfpc">github</a>. Head over there and
-follow the compilation instructions.
-
+Download <a
+    href="https://github.com/downloads/davvil/pdfpc/pdfpc-3.0.tgz">pdfpc-3.0.tgz</a>.
+<p>
 If you use <a href="http://www.archlinux.org">Arch Linux</a>, you can
 download the <a
-    href="https://aur.archlinux.org/packages.php?ID=58957">AUR</a> package.
+    href="https://aur.archlinux.org/packages.php?ID=59204">AUR</a> package.
+<p>
+You can also get the bleeding-edge version from <a
+    href="https://github.com/davvil/pdfpc">github</a> (or <a
+    href="https://aur.archlinux.org/packages.php?ID=58957">AUR</a>).
 
-<!--
-</ul><h1>Compile and install</h1>
+<h3>Dependencies</h3>
 
-<p>After retrieving the archive unpack it using the following command::</p>
+In order to compile and run pdfpc the following requirements need to be
+met:
+<ul>
+    <li>CMake Version &gt;=2.6</li>
+    <li>Gtk+ 2.x</li>
+    <li>libPoppler with glib bindings</li>
+    <li>librsvg</li>
+</ul>
 
-<pre><code>tar xvzf pdf_presenter_console-VERSION.tar.gz
-</code></pre>
+<h3>Compile and install</h3>
 
-<p>Switch to the unpacked source directory and create some sort of build
-directory. This may be done as follows::</p>
+Uncompress the tarball (we use v3.0 as an example here)
 
-<pre><code>cd pdf_presenter_console-VERSION
-mkdir build
-cd build
-</code></pre>
+<pre><code>tar xvf pdfpc-3.0.tgz </code></pre>
 
-<p>After you are inside the build directory create the needed Makefiles using
-CMake::</p>
+Change to the extracted directory::
 
-<pre><code>cmake ../
-</code></pre>
+<pre><code>cd pdfpc-3.0 </pre></code>
 
-<p>If you have put your build directory elsewhere on your system adapt the path
-above accordingly. You need to provide CMake with the pdf_presenter_console
-directory which you just decompressed.</p>
+Compile and install::
 
-<p>You may alter the final installation prefix at this time. By default the
-pdf_presenter_console executable will be installed under <em>/usr/local/bin</em>. If
-you want to change that, for example to be <em>/usr/bin</em> you may specify another
-installation prefix as follows::</p>
+<pre><code>cmake .
+make
+sudo make install </pre></code>
 
-<pre><code>cmake -DCMAKE_INSTALL_PREFIX="/usr" ../
-</code></pre>
+If there are no errors in the process, you just installed pdfpc on your system.
+Congratulations! If there were errors, they are probably due to missing
+dependencies. Please check that you have all the necessary libraries (in some
+distributions you may have to install *-devel* packages).
+<p>
+Note: You may alter the final installation prefix in the cmake call. By default
+the pdfpc files will be installed under */usr/local/*. If you want to change
+that, for example to be installed under */usr/* you may specify another
+installation prefix as follows::
 
-<p>If all requirements are met CMake will tell you that it created all the
-necessary build files for you. If any of the requirements were not met you
-will be informed of it to provide the necessary files or install the
-appropriate packages.</p>
+<pre><code>cmake -DCMAKE_INSTALL_PREFIX="/usr" .  </pre></code>
 
-<p>The next step is to compile the source using GNU Make or any other make
-derivative you may have installed. Simply issue the following command to start
-building the application::</p>
-
-<pre><code>make
-</code></pre>
-
-<p>After the build completes successfully the <em>pdf_presenter_console</em> executable
-can be found inside the <em>src</em> directory of you build path. If you want to
-install it automatically to the <em>bin</em> directory below the before provided
-prefix do as follows::</p>
-
-<pre><code>make install
-</code></pre>
-
-<p>You may need to prefix this command with a <em>sudo</em> or obtain super-user rights
-in any other way applicable to your situation.</p>
-
-<p>Congratulations you just installed Pdf Presenter Console on your system.</p>
-
-<h2>Retrieving the current trunk from the softwares git repository</h2>
-
-<p>If you want to use the bleeding edge version of this software, you may always
-retrieve the current development branch from its git repository. Do this on
-your own risk. It may not compile, make your socks disappear or even eat your
-cat ;).</p>
-
-<p>The repository is hosted at github__. If the git executable is available on
-your system it can be retrieved using the following command::</p>
-
-<pre><code>git clone git://github.com/jakobwesthoff/Pdf-Presenter-Console.git
-</code></pre>
-
-<p>After it has been transfered you need to switch to the
-<code>Pdf-Presenter-Console</code> directory, which has just been created. From inside
-this directory use these commands to retrieve all needed submodules::</p>
-
-<pre><code>git submodule init
-git submodule update
-</code></pre>
-
-<p>You are now set to compile and install the presenter as described in the
-section above. However as mentioned above the code might not compile at all.</p>
-
-<p>__ <a href="http://github.com/jakobwesthoff/Pdf-Presenter-Console">http://github.com/jakobwesthoff/Pdf-Presenter-Console</a></p>
--->
+For compiling the git version, follow the instructions given in the <a
+    href="https://github.com/davvil/pdfpc">github</a> page.
 
 <h1>Acknowledgements</h1>
 pdfpc is a fork of <a href="http://westhoffswelt.de/projects/pdf_presenter_console.html">pdf presenter console</a> by Jakob Westhoff, extended with additional features.
