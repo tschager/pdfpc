@@ -46,13 +46,13 @@ namespace pdfpc.Window {
          */
         public Presentation( Metadata.Pdf metadata, int screen_num, PresentationController presentation_controller ) {
             base( screen_num );
+            this.role = "presentation";
 
             this.destroy.connect( (source) => {
-                Gtk.main_quit();
+                presentation_controller.quit();
             } );
 
             this.presentation_controller = presentation_controller;
-            this.presentation_controller.register_controllable( this );
 
             Color black;
             Color.parse( "black", out black );
@@ -68,7 +68,9 @@ namespace pdfpc.Window {
                 metadata,
                 this.screen_geometry.width, 
                 this.screen_geometry.height,
+                Metadata.Area.CONTENT,
                 Options.black_on_end,
+                true,
                 this.presentation_controller,
                 out scale_rect
             );
@@ -96,6 +98,8 @@ namespace pdfpc.Window {
             this.key_press_event.connect( this.on_key_pressed );
             this.button_press_event.connect( this.on_button_press );
             this.scroll_event.connect( this.on_scroll );
+
+            this.presentation_controller.register_controllable( this );
         }
 
         /**
@@ -200,6 +204,13 @@ namespace pdfpc.Window {
             if( prerendering_view != null ) {
                 observer.monitor_view( prerendering_view );
             }
+        }
+
+        /**
+         * The only view is the main view.
+         */
+        public View.Pdf? get_main_view() {
+            return this.view as View.Pdf;
         }
     }
 }

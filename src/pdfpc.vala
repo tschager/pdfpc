@@ -74,6 +74,7 @@ namespace pdfpc {
             { "single-screen", 'S', 0, 0, ref Options.single_screen, "Force to use only one screen", null },
             { "list-actions", 'L', 0, 0, ref Options.list_actions, "List actions supported in the config file(s)", null},
             { "windowed", 'w', 0, 0, ref Options.windowed, "Run in windowed mode (devel tool)", null},
+            { "notes", 'n', 0, OptionArg.STRING, ref Options.notes_position, "Position of notes on the pdf page (either left, right, top or bottom)", "P"},
             { null }
         };
 
@@ -83,7 +84,7 @@ namespace pdfpc {
          *
 		 * Returns the name of the pdf file to open (or null if not present)
          */
-        protected string? parse_command_line_options( string[] args ) {
+        protected string? parse_command_line_options( ref unowned string[] args ) {
             var context = new OptionContext( "<pdf-file>" );
 
             context.add_main_entries( options, null );
@@ -139,7 +140,10 @@ namespace pdfpc {
             Gdk.threads_init();
             Gtk.init( ref args );
 
-            string pdfFilename = this.parse_command_line_options( args );
+            string pdfFilename = this.parse_command_line_options( ref args );
+
+            Gst.init( ref args );
+
             if (Options.list_actions) {
 				stdout.printf("Config file commands accepted by pdfpc:\n");
 				string[] actions = PresentationController.getActionDescriptions();
@@ -161,7 +165,8 @@ namespace pdfpc {
 
             stdout.printf( "Initializing rendering...\n" );
 
-            var metadata = new Metadata.Pdf( pdfFilename );
+            pdfpc.Metadata.NotesPosition notes_position = pdfpc.Metadata.NotesPosition.from_string(Options.notes_position);
+            var metadata = new Metadata.Pdf( pdfFilename, notes_position );
             if ( Options.duration != 987654321u )
                 metadata.set_duration(Options.duration);
 
@@ -182,10 +187,10 @@ namespace pdfpc {
                 else
                     presenter_monitor    = (screen.get_primary_monitor() + 1) % 2;
                 presentation_monitor = (presenter_monitor + 1) % 2;
-                this.presentation_window = 
-                    this.create_presentation_window( metadata, presentation_monitor );
                 this.presenter_window = 
                     this.create_presenter_window( metadata, presenter_monitor );
+                this.presentation_window = 
+                    this.create_presentation_window( metadata, presentation_monitor );
             } else if (Options.windowed && !Options.single_screen) {
                 this.presenter_window =
                     this.create_presenter_window( metadata, -1 );
